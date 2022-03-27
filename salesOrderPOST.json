@@ -1,0 +1,31 @@
+{
+    "orderId": 1,
+    "orderStatus": "new",
+    "client": {
+      "companyName": "McDonald's",
+      "branchId": 123,
+      "branchAddress": "Drienerlolaan 5"
+    },
+    "goodsList": [
+      {
+        "goodsId": 1,
+        "product": {
+          "productId": 321,
+          "productName": "Chicken",
+          "productUnit": "kg"
+        },
+        "amount": 100
+      },
+  {
+        "goodsId": 2,
+        "product": {
+          "productId": 323,
+          "productName": "Beef",
+          "productUnit": "kg"
+        },
+        "amount": 50
+      }
+    ],
+    "proposedDeliveryDate": "2022-03-26T09:39:48.677Z",
+    "creationDate": "2022-03-26T09:39:48.677Z"
+  }
