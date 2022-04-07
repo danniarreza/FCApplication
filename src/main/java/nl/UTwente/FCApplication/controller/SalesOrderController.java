@@ -52,16 +52,9 @@ public class SalesOrderController {
 
             goods = goodsRepository.save(goods); 
             updatedGoodsList.add(goods);
-            System.out.println("After save");
-            System.out.println(goods.getGoodsId());           
         }
 
         salesOrder.setGoodsList(updatedGoodsList);
-
-        for (Goods goods : updatedGoodsList) {
-            System.out.println("Check");
-            System.out.println(goods.getGoodsId());
-        }
 
         // save sales order to database
         salesOrder.setClient(client);
