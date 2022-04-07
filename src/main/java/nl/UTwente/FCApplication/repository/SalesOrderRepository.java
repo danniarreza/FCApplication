@@ -5,62 +5,62 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import nl.UTwente.FCApplication.model.SalesOrder;
 
-@Service
-public class SalesOrderRepository {
+public interface SalesOrderRepository extends JpaRepository<SalesOrder, Integer> {
 
-    private static final List<SalesOrder> salesOrderList = new ArrayList<>();
-    private static int idCounter = 1;
+    // private static final List<SalesOrder> salesOrderList = new ArrayList<>();
+    // private static int idCounter = 1;
 
-    public SalesOrder createSalesOrder(SalesOrder salesOrder){
-        salesOrder.setOrderId(idCounter++);
-        salesOrderList.add(salesOrder);
-        return salesOrder;
-    }
+    // public SalesOrder createSalesOrder(SalesOrder salesOrder){
+    //     salesOrder.setSalesOrderId(idCounter++);
+    //     salesOrderList.add(salesOrder);
+    //     return salesOrder;
+    // }
 
-    public SalesOrder updateSalesOrder(SalesOrder salesOrder){
-        salesOrderList.add(salesOrder);
-        return salesOrder;
-    }
+    // public SalesOrder updateSalesOrder(SalesOrder salesOrder){
+    //     salesOrderList.add(salesOrder);
+    //     return salesOrder;
+    // }
 
-    public SalesOrder updateSalesOrderConfirmedDate(int salesOrderId, Map<String, Date> confirmedDeliveryDate){
+    // public SalesOrder updateSalesOrderConfirmedDate(int salesOrderId, Map<String, Date> confirmedDeliveryDate){
 
-        // retrieve the sales order based on its id 
-        SalesOrder salesOrder = getSalesOrder(salesOrderId);
+    //     // retrieve the sales order based on its id 
+    //     SalesOrder salesOrder = getSalesOrder(salesOrderId);
 
-        // update its confirmed delivery date
-        salesOrder.setConfirmedDeliveryDate(confirmedDeliveryDate.get("confirmedDeliveryDate"));
+    //     // update its confirmed delivery date
+    //     salesOrder.setConfirmedDeliveryDate(confirmedDeliveryDate.get("confirmedDeliveryDate"));
 
-        // get the index of that sales order in the list
-        int index = salesOrderList.indexOf(salesOrder);
+    //     // get the index of that sales order in the list
+    //     int index = salesOrderList.indexOf(salesOrder);
 
-        // update the list with the updated sales order
-        salesOrderList.set(index, salesOrder);
+    //     // update the list with the updated sales order
+    //     salesOrderList.set(index, salesOrder);
 
-        return salesOrder;
+    //     return salesOrder;
 
-    }
+    // }
 
-    public SalesOrder getSalesOrder(int id){
+    // public SalesOrder getSalesOrder(int id){
 
-        for (SalesOrder salesOrder : salesOrderList) {
-            if(salesOrder.getOrderId() == id){
-                return salesOrder;
-            }
-        }
+    //     for (SalesOrder salesOrder : salesOrderList) {
+    //         if(salesOrder.getSalesOrderId() == id){
+    //             return salesOrder;
+    //         }
+    //     }
 
-        return null ;
-    }
+    //     return null ;
+    // }
 
-    public int deleteSalesOrder(int id){
-        salesOrderList.remove(id);
-        return id;
-    }
+    // public int deleteSalesOrder(int id){
+    //     salesOrderList.remove(id);
+    //     return id;
+    // }
 
-    public List<SalesOrder> getSalesOrderAll(){
-        return salesOrderList;
-    }
+    // public List<SalesOrder> getSalesOrderAll(){
+    //     return salesOrderList;
+    // }
 }

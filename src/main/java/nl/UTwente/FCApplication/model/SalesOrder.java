@@ -3,34 +3,62 @@ package nl.UTwente.FCApplication.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
 public class SalesOrder {
 
-    private int orderId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer salesOrderId;
     private String orderStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "branch_id", nullable = false)
     private Client client;
+    
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Goods> goodsList;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date proposedDeliveryDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date confirmedDeliveryDate;
-    private Date creationDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date creationDate = new Date();
 
     public SalesOrder(){
         
     }
 
-    public SalesOrder(int orderId, String orderStatus, List<Goods> goodsList, Date proposedDeliveryDate, Date creationDate) {
-        this.orderId = orderId;
+    public SalesOrder(Integer salesOrderId, String orderStatus, List<Goods> goodsList, Date proposedDeliveryDate, Date creationDate) {
+        this.salesOrderId = salesOrderId;
         this.orderStatus = orderStatus;
         this.goodsList = goodsList;
         this.proposedDeliveryDate = proposedDeliveryDate;
         this.creationDate = creationDate;
     }
 
-    public int getOrderId() {
-        return this.orderId;
+    public Integer getSalesOrderId() {
+        return this.salesOrderId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setSalesOrderId(Integer salesOrderId) {
+        this.salesOrderId = salesOrderId;
     }
 
     public String getOrderStatus() {
@@ -79,7 +107,7 @@ public class SalesOrder {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
-    }
+    }    
 
     
 }
