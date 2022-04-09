@@ -22,6 +22,10 @@ public class SalesOrderService {
         String url = "http://localhost:8081/salesOrder";
 
         RestTemplate restTemplate = restTemplateBuilder.build();
+
+        System.out.println("This is sales order id");
+        System.out.println(salesOrder.getSalesOrderId());
+
         restTemplate.postForObject(url, salesOrder, SalesOrder.class);
 
     }

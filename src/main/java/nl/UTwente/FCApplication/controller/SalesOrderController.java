@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.UTwente.FCApplication.model.Client;
 import nl.UTwente.FCApplication.model.Goods;
@@ -26,14 +25,19 @@ import nl.UTwente.FCApplication.repository.SalesOrderRepository;
 import nl.UTwente.FCApplication.service.SalesOrderService;
 
 @RestController
-@Tag(name="Sales Order API", description="This is the Sales Order REST API")
+@Tag(name = "Sales Order API", description = "This is the Sales Order REST API")
 public class SalesOrderController {
 
-    @Autowired SalesOrderService salesOrderService;
-    @Autowired SalesOrderRepository salesOrderRepository;
-    @Autowired ClientRepository clientRepository;
-    @Autowired ProductRepository productRepository;
-    @Autowired GoodsRepository goodsRepository;
+    @Autowired
+    SalesOrderService salesOrderService;
+    @Autowired
+    SalesOrderRepository salesOrderRepository;
+    @Autowired
+    ClientRepository clientRepository;
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    GoodsRepository goodsRepository;
 
     @PostMapping("/salesOrder")
     public SalesOrder createSalesOrder(@RequestBody SalesOrder salesOrder) {
@@ -50,7 +54,7 @@ public class SalesOrderController {
             Product existingProduct = productRepository.findById(productId).orElse(null);
             goods.setProduct(existingProduct);
 
-            goods = goodsRepository.save(goods); 
+            goods = goodsRepository.save(goods);
             updatedGoodsList.add(goods);
         }
 
@@ -67,8 +71,8 @@ public class SalesOrderController {
     }
 
     @GetMapping("/salesOrder")
-    public List<SalesOrder> getAllSalesOrder(){
-        
+    public List<SalesOrder> getAllSalesOrder() {
+
         // get sales orders from database
         List<SalesOrder> salesOrderList = salesOrderRepository.findAll();
 
@@ -76,35 +80,44 @@ public class SalesOrderController {
     }
 
     @GetMapping("/salesOrder/{id}")
-    public SalesOrder getSalesOrderById(@PathVariable int id){
-        
+    public SalesOrder getSalesOrderById(@PathVariable int id) {
+
         // get sales orders from database
         SalesOrder salesOrder = salesOrderRepository.findById(id).orElse(null);
-        
-        return salesOrder;
-    }
-
-    @PatchMapping("/salesOrder/{id}")
-    public SalesOrder patchSalesOrder(@PathVariable int id, @RequestBody Map<String, Date> confirmedDeliveryDate){
-
-        SalesOrder salesOrder = updateSalesOrderConfirmedDate(id, confirmedDeliveryDate);
 
         return salesOrder;
     }
 
-    public SalesOrder updateSalesOrderConfirmedDate(int salesOrderId, Map<String, Date> confirmedDeliveryDate){
+    @PatchMapping("/salesOrder/{id}/confirmedDeliveryDate")
+    public SalesOrder patchSalesOrderConfirmedDeliveryDate(@PathVariable int id,
+            @RequestBody Map<String, Date> confirmedDeliveryDate) {
 
-        // retrieve the sales order based on its id 
-        SalesOrder salesOrder = salesOrderRepository.findById(salesOrderId).orElse(null);
+        // retrieve the sales order based on its id
+        SalesOrder existingSalesOrder = salesOrderRepository.findById(id).orElse(null);
 
         // update its confirmed delivery date
-        salesOrder.setConfirmedDeliveryDate(confirmedDeliveryDate.get("confirmedDeliveryDate"));
+        existingSalesOrder.setConfirmedDeliveryDate(confirmedDeliveryDate.get("confirmedDeliveryDate"));
 
         // update sales order in database
-        salesOrderRepository.save(salesOrder);
+        salesOrderRepository.save(existingSalesOrder);
 
-        return salesOrder;
+        return existingSalesOrder;
+    }
 
+    @PatchMapping("/salesOrder/{id}/status")
+    public SalesOrder patchSalesOrderStatus(@PathVariable int id,
+            @RequestBody Map<String, String> salesOrderStatus) {
+
+        // retrieve the sales order based on its id
+        SalesOrder existingSalesOrder = salesOrderRepository.findById(id).orElse(null);
+    
+        // update its confirmed delivery date
+        existingSalesOrder.setOrderStatus(salesOrderStatus.get("orderStatus"));
+
+        // update sales order in database
+        salesOrderRepository.save(existingSalesOrder);
+
+        return existingSalesOrder;
     }
 
 }
