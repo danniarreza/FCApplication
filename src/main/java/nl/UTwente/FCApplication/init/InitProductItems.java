@@ -5,9 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import nl.UTwente.FCApplication.model.Client;
 import nl.UTwente.FCApplication.model.Product;
-import nl.UTwente.FCApplication.repository.ClientRepository;
 import nl.UTwente.FCApplication.repository.ProductRepository;
 
 @Component

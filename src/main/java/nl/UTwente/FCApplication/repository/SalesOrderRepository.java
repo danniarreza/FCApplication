@@ -1,12 +1,6 @@
 package nl.UTwente.FCApplication.repository;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import nl.UTwente.FCApplication.model.SalesOrder;
 
